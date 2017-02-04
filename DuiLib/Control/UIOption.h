@@ -34,6 +34,8 @@ namespace DuiLib
 		LPCTSTR GetForeImage();
 		void SetForeImage(LPCTSTR pStrImage);
 
+		void SetSelectedForeImage(LPCTSTR pStrImage);
+
 		LPCTSTR GetGroup() const;
 		void SetGroup(LPCTSTR pStrGroupName = NULL);
 		bool IsSelected() const;
@@ -55,6 +57,7 @@ namespace DuiLib
 		TDrawInfo		m_diSelected;
 		TDrawInfo		m_diSelectedHot;
 		TDrawInfo		m_diFore;
+		TDrawInfo       m_diSelectedFore;
 	};
 
 } // namespace DuiLib

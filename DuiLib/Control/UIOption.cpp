@@ -169,6 +169,14 @@ namespace DuiLib
 		Invalidate();
 	}
 
+	void COptionUI::SetSelectedForeImage(LPCTSTR pStrImage)
+	{
+		if (m_diSelectedFore.sDrawString == pStrImage && m_diSelectedFore.pImageInfo != NULL) return;
+		m_diSelectedFore.Clear();
+		m_diSelectedFore.sDrawString = pStrImage;
+		Invalidate();
+	}
+
 	SIZE COptionUI::EstimateSize(SIZE szAvailable)
 	{
 		if( m_cxyFixed.cy == 0 ) return CDuiSize(m_cxyFixed.cx, m_pManager->GetFontInfo(GetFont())->tm.tmHeight + 8);
@@ -182,6 +190,7 @@ namespace DuiLib
 		else if( _tcscmp(pstrName, _T("selectedimage")) == 0 ) SetSelectedImage(pstrValue);
 		else if( _tcscmp(pstrName, _T("selectedhotimage")) == 0 ) SetSelectedHotImage(pstrValue);
 		else if( _tcscmp(pstrName, _T("foreimage")) == 0 ) SetForeImage(pstrValue);
+		else if( _tcscmp(pstrName, _T("selectedforeimage")) == 0 ) SetSelectedForeImage(pstrValue);
 		else if( _tcscmp(pstrName, _T("selectedbkcolor")) == 0 ) {
 			if( *pstrValue == _T('#')) pstrValue = ::CharNext(pstrValue);
 			LPTSTR pstr = NULL;
@@ -202,10 +211,10 @@ namespace DuiLib
 		if( (m_uButtonState & UISTATE_SELECTED) != 0 ) {
 			if ((m_uButtonState & UISTATE_HOT) != 0)
 			{
-				if (DrawImage(hDC, m_diSelectedHot)) goto Label_ForeImage;
+				if (DrawImage(hDC, m_diSelectedHot)) goto Label_SelectedForeImage;
 			}
 
-			if( DrawImage(hDC, m_diSelected) ) goto Label_ForeImage;
+			if( DrawImage(hDC, m_diSelected) ) goto Label_SelectedForeImage;
 			else if(m_dwSelectedBkColor != 0) {
 				CRenderEngine::DrawColor(hDC, m_rcPaint, GetAdjustColor(m_dwSelectedBkColor));
 				goto Label_ForeImage;
@@ -219,6 +228,10 @@ namespace DuiLib
 
 Label_ForeImage:
 		DrawImage(hDC, m_diFore);
+		return;
+
+Label_SelectedForeImage:
+		DrawImage(hDC, m_diSelectedFore);
 	}
 
 	void COptionUI::PaintText(HDC hDC)
