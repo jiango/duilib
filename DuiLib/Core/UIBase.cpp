@@ -11,7 +11,7 @@ namespace DuiLib {
 //
 //
 
-void UILIB_API DUI__Trace(LPCTSTR pstrFormat, ...)
+void DUILIB_API DUI__Trace(LPCTSTR pstrFormat, ...)
 {
 #ifdef _DEBUG
     TCHAR szBuffer[300] = { 0 };
@@ -335,7 +335,7 @@ void CWindowWnd::CenterWindow()
 	::GetMonitorInfo(::MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST), &oMonitor);
 	rcArea = oMonitor.rcWork;
 
-    if( hWndCenter == NULL )
+	if( hWndCenter == NULL || IsIconic(hWndCenter))
 		rcCenter = rcArea;
 	else
 		::GetWindowRect(hWndCenter, &rcCenter);
